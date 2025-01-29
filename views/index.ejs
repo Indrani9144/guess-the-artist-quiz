@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess The Artist</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Guess the Artist</h1>
+        <img src="<%= image %>" alt="Artwork">
+        <h2>"<%= title %>"</h2>
+
+        <div id="choices">
+            <% choices.forEach(choice => { %>
+                <button onclick="checkAnswer('<%= choice %>', '<%= correct %>')"><%= choice %></button>
+            <% }); %>
+        </div>
+
+        <p id="result"></p>
+        <button onclick="window.location.reload()">Next Artwork</button>
+    </div>
+
+    <script>
+        function checkAnswer(selected, correct) {
+            const result = document.getElementById("result");
+            if (selected === correct) {
+                result.textContent = "✅ Correct!";
+                result.style.color = "green";
+            } else {
+                result.textContent = `❌ Wrong! The correct answer is: ${correct}`;
+                result.style.color = "red";
+            }
+        }
+    </script>
+</body>
+</html>
