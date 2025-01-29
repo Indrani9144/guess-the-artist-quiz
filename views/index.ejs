@@ -25,17 +25,7 @@
         <button onclick="window.location.reload()">Next Artwork</button>
     </div>
 
-    <script>
-        function checkAnswer(selected, correct) {
-            const result = document.getElementById("result");
-            if (selected === correct) {
-                result.textContent = "✅ Correct!";
-                result.style.color = "green";
-            } else {
-                result.textContent = `❌ Wrong! The correct answer is: ${correct}`;
-                result.style.color = "red";
-            }
-        }
+    <script src="/script.js">
     </script>
 </body>
 </html>

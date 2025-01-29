@@ -2,6 +2,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const choicesDiv = document.getElementById("choices");
     const result = document.getElementById("result");
     const nextButton = document.getElementById("nextButton");
+    const scoreDisplay = document.getElementById("score");
+    const resetButton = document.getElementById("resetScore");
+
+    let correctCount = localStorage.getItem("correctScore") ? parseInt(localStorage.getItem("correctScore")) : 0;
+    let wrongCount = localStorage.getItem("wrongScore") ? parseInt(localStorage.getItem("wrongScore")) : 0;
 
     function updateScoreDisplay() {
         scoreDisplay.innerHTML = `✅ Correct: ${correctCount} | ❌ Wrong: ${wrongCount}`;
@@ -23,9 +28,13 @@ document.addEventListener("DOMContentLoaded", () => {
             result.style.color = "red";
         }
 
+        localStorage.setItem("correctScore", correctCount);
+        localStorage.setItem("wrongScore", wrongCount);
+
         document.querySelectorAll("#choices button").forEach(btn => {
             btn.disabled = true;
         });
+        updateScoreDisplay(); 
     }
 
     choicesDiv.addEventListener("click", (event) => {
@@ -39,4 +48,12 @@ document.addEventListener("DOMContentLoaded", () => {
     nextButton.addEventListener("click", () => {
         window.location.reload();
     });
+});
+
+resetButton.addEventListener("click", () => {
+    localStorage.removeItem("correctScore");
+    localStorage.removeItem("wrongScore");
+    correctCount = 0;
+    wrongCount = 0;
+    updateScoreDisplay();
 });
