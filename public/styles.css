@@ -39,3 +39,10 @@ button:hover {
     display: inline-block;
     margin: 5px;
 }
+
+#score {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}

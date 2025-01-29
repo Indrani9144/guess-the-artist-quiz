@@ -3,6 +3,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const result = document.getElementById("result");
     const nextButton = document.getElementById("nextButton");
 
+    function updateScoreDisplay() {
+        scoreDisplay.innerHTML = `✅ Correct: ${correctCount} | ❌ Wrong: ${wrongCount}`;
+    }
+    updateScoreDisplay();
+
+    document.getElementById("resetScore").addEventListener("click", () => {
+        localStorage.removeItem("correctScore");
+        localStorage.removeItem("wrongScore");
+        window.location.reload();
+    });
+
     function checkAnswer(selected, correct) {
         if (selected === correct) {
             result.textContent = "✅ Correct!";

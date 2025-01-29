@@ -1,0 +1,4 @@
+# Ignore dependencies
+node_modules/
+package-lock.json
+thumbs.dbnode_modules/
