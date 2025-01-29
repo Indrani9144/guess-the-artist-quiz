@@ -17,9 +17,9 @@
 
         <div id="choices">
             <% choices.forEach(choice => { %>
-                <button onclick="checkAnswer('<%= choice %>', '<%= correct %>')"><%= choice %></button>
+                <button data-correct="<%= correct ? correct.replace(/"/g, '&quot;') : '' %>"><%= choice %></button>
             <% }); %>
-        </div>
+        </div>        
 
         <p id="result"></p>
         <button onclick="window.location.reload()">Next Artwork</button>
