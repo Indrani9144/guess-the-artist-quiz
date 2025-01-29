@@ -18,11 +18,12 @@
             <option value="19">Photography</option>
             <option value="21">Modern & Contemporary Art</option>
         </select>
-
         <button id="filterButton">Apply Filter</button>
+
         <p id="score">✅ Correct: 0 | ❌ Wrong: 0</p>
         <button id="resetScore">Reset Score</button>
 
+        <% if (image) {
         <img src="<%= image %>" alt="Artwork">
         <h2>"<%= title %>"</h2>
 
