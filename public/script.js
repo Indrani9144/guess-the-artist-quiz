@@ -5,8 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const scoreDisplay = document.getElementById("score");
     const resetButton = document.getElementById("resetScore");
 
-    let correctCount = localStorage.getItem("correctScore") ? parseInt(localStorage.getItem("correctScore")) : 0;
-    let wrongCount = localStorage.getItem("wrongScore") ? parseInt(localStorage.getItem("wrongScore")) : 0;
+    let correctCount = parseInt(localStorage.getItem("correctScore")) || 0;
+    let wrongCount = parseInt(localStorage.getItem("wrongScore")) || 0;
 
     function updateScoreDisplay() {
         scoreDisplay.innerHTML = `✅ Correct: ${correctCount} | ❌ Wrong: ${wrongCount}`;
@@ -23,9 +23,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (selected === correct) {
             result.textContent = "✅ Correct!";
             result.style.color = "green";
+            correctCount++;
         } else {
             result.textContent = `❌ Wrong! The correct answer is: ${correct}`;
             result.style.color = "red";
+            wrongCount++;
         }
 
         localStorage.setItem("correctScore", correctCount);
