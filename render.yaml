@@ -1,0 +1,10 @@
+services:
+  - name: guess-the-artist-quiz
+    type: web
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node index.js
+    repo: https://github.com/Indrani9144/guess-the-artist-quiz
+    branch: main
+    autoDeploy: true
