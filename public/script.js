@@ -13,13 +13,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     updateScoreDisplay();
 
-    document.getElementById("resetScore").addEventListener("click", () => {
-        localStorage.removeItem("correctScore");
-        localStorage.removeItem("wrongScore");
-        window.location.reload();
-    });
-
     function checkAnswer(selected, correct) {
+        if (!correct || correct === "null") {
+            correct = "Unknown Artist"; 
+        }
         if (selected === correct) {
             result.textContent = "✅ Correct!";
             result.style.color = "green";
@@ -47,15 +44,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    resetButton.addEventListener("click", () => {
+        localStorage.removeItem("correctScore");
+        localStorage.removeItem("wrongScore");
+        correctCount = 0;
+        wrongCount = 0;
+        updateScoreDisplay();
+    });
+
     nextButton.addEventListener("click", () => {
         window.location.reload();
     });
 });
 
-resetButton.addEventListener("click", () => {
-    localStorage.removeItem("correctScore");
-    localStorage.removeItem("wrongScore");
-    correctCount = 0;
-    wrongCount = 0;
-    updateScoreDisplay();
-});

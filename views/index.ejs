@@ -9,6 +9,17 @@
 <body>
     <div class="container">
         <h1>🎨 Guess the Artist</h1>
+
+        <label for="category">Choose an artwork type:</label>
+        <select id="category">
+            <option value="">All</option>
+            <option value="11">European Paintings</option>
+            <option value="3">Sculptures</option>
+            <option value="19">Photography</option>
+            <option value="21">Modern & Contemporary Art</option>
+        </select>
+
+        <button id="filterButton">Apply Filter</button>
         <p id="score">✅ Correct: 0 | ❌ Wrong: 0</p>
         <button id="resetScore">Reset Score</button>
 
@@ -23,6 +34,9 @@
 
         <p id="result"></p>
         <button onclick="window.location.reload()">Next Artwork</button>
+        <% } else { %>
+            <p>No artwork found for this category. Please try another category.</p>
+        <% } %>
     </div>
 
     <script src="/script.js">
