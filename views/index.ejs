@@ -20,27 +20,29 @@
         </select>
         <button id="filterButton">Apply Filter</button>
 
-        <p id="score">✅ Correct: 0 | ❌ Wrong: 0</p>
-        <button id="resetScore">Reset Score</button>
+        <p id="score">✅ Correct: 0 | ❌ Wrong: 0 | 🔄 Round: 0/10</p>
+        <button id="resetScore">Reset Game</button>
 
-        <% if (image) {
-        <img src="<%= image %>" alt="Artwork">
-        <h2>"<%= title %>"</h2>
+        <% if (image) { %>  
+            <img src="<%= image %>" alt="Artwork">
+            <h2>"<%= title %>"</h2>
 
-        <div id="choices">
-            <% choices.forEach(choice => { %>
-                <button data-correct="<%= correct ? correct.replace(/"/g, '&quot;') : '' %>"><%= choice %></button>
-            <% }); %>
-        </div>        
+            <div id="choices">
+                <% choices.forEach(choice => { %>
+                    <button data-correct="<%= correct ? correct.replace(/"/g, '&quot;') : 'Unknown Artist' %>"><%= choice %></button>
+                <% }); %>  
+            </div>
 
-        <p id="result"></p>
-        <button onclick="window.location.reload()">Next Artwork</button>
-        <% } else { %>
+            <p id="result"></p>
+            <button id="nextButton">Next Artwork</button>
+
+        <% } else { %> 
             <p>No artwork found for this category. Please try another category.</p>
-        <% } %>
+        <% } %>  
+        <div id="gameEndMessage"></div>
     </div>
 
-    <script src="/script.js">
-    </script>
+    <script src="/script.js"></script>
 </body>
 </html>
+
