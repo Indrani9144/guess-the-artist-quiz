@@ -5,29 +5,43 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const app = express();
-app.use(cors()); 
-app.use(express.static("public")); 
-app.set("view engine", "ejs"); 
+app.use(cors());
+app.use(express.static("public"));
+app.set("view engine", "ejs");
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-app.set("views", path.join(__dirname, "views")); 
+app.set("views", path.join(__dirname, "views"));
 
 const MET_API_URL = "https://collectionapi.metmuseum.org/public/collection/v1";
 
-async function getRandomArtwork() {
+async function getRandomArtwork(departmentId = null, retries = 10) {
     try {
-        const randomID = Math.floor(Math.random() * 900000);
-        const response = await axios.get(`${MET_API_URL}/objects/${randomID}`);
-
-        if (!response.data || !response.data.artistDisplayName || !response.data.primaryImage) {
-            return getRandomArtwork(); 
+        let objectIDsUrl = `${MET_API_URL}/objects`;
+        
+        if (departmentId) {
+            objectIDsUrl += `?departmentIds=${departmentId}`;
         }
 
-        return response.data;
+        const response = await axios.get(objectIDsUrl);
+        const objectIDs = response.data.objectIDs;
+
+        if (!objectIDs || objectIDs.length === 0) {
+            throw new Error("No artworks found for this category.");
+        }
+        for (let i = 0; i < retries; i++) {
+            const randomID = objectIDs[Math.floor(Math.random() * objectIDs.length)];
+            const artworkResponse = await axios.get(`${MET_API_URL}/objects/${randomID}`);
+            const artwork = artworkResponse.data;
+
+            if (artwork.primaryImage && artwork.artistDisplayName) {
+                return artwork; 
+            }
+        }
+        throw new Error("Could not find a valid artwork after multiple retries.");
     } catch (error) {
-        return getRandomArtwork();
+        console.error("Error fetching artwork:", error.message);
+        return null;
     }
 }
 
@@ -38,7 +52,13 @@ async function getRandomArtists(correctArtist) {
 
 app.get("/", async (req, res) => {
     try {
-        const artwork = await getRandomArtwork();
+        const departmentId = req.query.departmentId || "";
+        const artwork = await getRandomArtwork(departmentId);
+
+        if (!artwork) {
+            return res.status(500).send("Could not find a valid artwork.");
+        }
+
         const wrongArtists = await getRandomArtists(artwork.artistDisplayName);
         const choices = [...wrongArtists, artwork.artistDisplayName].sort(() => 0.5 - Math.random());
 
@@ -47,6 +67,7 @@ app.get("/", async (req, res) => {
             title: artwork.title,
             choices: choices,
             correct: artwork.artistDisplayName,
+            departmentId: departmentId, 
         });
     } catch (error) {
         res.status(500).send("Error fetching artwork.");
