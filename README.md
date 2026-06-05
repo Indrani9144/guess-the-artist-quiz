@@ -15,8 +15,7 @@ A full-stack interactive quiz application where users guess the artist based on 
 - Deployment: Render
 
 ## Live Demo
-[https://guess-the-artist-quiz.onrender.com
-](url)
+https://guess-the-artist-quiz.onrender.com(url)
 ## What I Learned
 - Building full-stack applications
 - API integration
